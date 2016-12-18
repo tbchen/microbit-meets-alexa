@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements ScanResultsConsum
         setContentView(R.layout.activity_main);
 
         setButtonText();
-//        getSupportActionBar().setTitle(R.string.screen_title_main);
         showMsg(Utility.htmlColorGreen("Ready"));
 
         Settings.getInstance().restore(this);
@@ -147,50 +146,6 @@ public class MainActivity extends AppCompatActivity implements ScanResultsConsum
         }
         Settings.getInstance().save(this);
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//
-//        if (id == R.id.menu_main_settings) {
-//            Intent intent = new Intent(MainActivity.this, MainSettingsActivity.class);
-//            startActivityForResult(intent, MainSettingsActivity.START_MAIN_SETTINGS);
-//            return true;
-//        }
-//        if (id == R.id.menu_main_help) {
-//            Intent intent = new Intent(MainActivity.this, HelpActivity.class);
-//            intent.putExtra(Constants.URI, Constants.MAIN_HELP);
-//            startActivity(intent);
-//            return true;
-//        }
-//        if (id == R.id.menu_main_about) {
-//            Intent intent = new Intent(MainActivity.this, HelpActivity.class);
-//            intent.putExtra(Constants.URI, Constants.MAIN_ABOUT);
-//            startActivity(intent);
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        Log.d(Constants.TAG, "onActivityResult");
-//        if (requestCode == MainSettingsActivity.START_MAIN_SETTINGS) {
-//            if (resultCode == RESULT_OK) {
-//                Log.d(Constants.TAG, "onActivityResult RESULT_OK");
-//                setButtonText();
-//                showMsg(Utility.htmlColorGreen("Ready"));
-//            } else {
-//                Log.d(Constants.TAG, "onActivityResult NOT RESULT_OK");
-//            }
-//        }
-//    }
 
     public void onScan(View view) {
 

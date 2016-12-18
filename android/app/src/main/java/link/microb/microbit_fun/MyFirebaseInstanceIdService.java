@@ -29,7 +29,7 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
         );
 
         final String SNS_Platform_Application_Arn = "arn:aws:sns:xxxx:xxxxxx";//change this to your app arn
-        final String SNS_Topic_Arn = "arn:aws:sns:us-west-2:xxxx:xxxxxx";// change this to your topic arn
+        final String SNS_Topic_Arn = "arn:aws:sns:xxxx:xxxxxx";// change this to your topic arn
         final Regions Default_Service_Region_Type = Regions.US_WEST_2;// change this to your region
 
         AmazonSNSClient snsClient = new AmazonSNSClient(credentialsProvider);
