@@ -92,9 +92,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-            String valueString = remoteMessage.getData().get("default");
+            String weatherIcon = remoteMessage.getData().get("default");
             short type = 1104;
-            short value = Short.valueOf(valueString);
+            short value = 1;
+            if("01d".equals(weatherIcon) || "01n".equals(weatherIcon)) {
+                value = 1;
+            }else if("02d".equals(weatherIcon) || "02n".equals(weatherIcon)) {
+                value = 2;
+            }else if("03d".equals(weatherIcon) || "03n".equals(weatherIcon)) {
+                value = 3;
+            }else if("04d".equals(weatherIcon) || "04n".equals(weatherIcon)) {
+                value = 4;
+            }else if("09d".equals(weatherIcon) || "09n".equals(weatherIcon)) {
+                value = 5;
+            }else if("10d".equals(weatherIcon) || "10n".equals(weatherIcon)) {
+                value = 6;
+            }else if("11d".equals(weatherIcon) || "11n".equals(weatherIcon)) {
+                value = 7;
+            }else if("13d".equals(weatherIcon) || "13n".equals(weatherIcon)) {
+                value = 8;
+            }else if("50d".equals(weatherIcon) || "50n".equals(weatherIcon)) {
+                value = 9;
+            }
             MicroBitEvent mb_event = new MicroBitEvent(type,value);
             byte[] event_bytes = mb_event.getEventBytesForBle();
             if(bluetooth_le_adapter != null) {

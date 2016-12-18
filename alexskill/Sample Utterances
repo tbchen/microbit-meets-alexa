@@ -1,1 +1,3 @@
-ControlMicrobit turn micro bit {ControlType} {ControlState}
+ControlMicrobit What is the weather
+ControlMicrobit What is the weather now
+ControlMicrobit What is the weather today

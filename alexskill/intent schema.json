@@ -1,17 +1,7 @@
 {
   "intents": [
     {
-      "intent": "ControlMicrobit",
-      "slots": [
-        {
-          "name": "ControlType",
-          "type": "LIST_OF_TYPE"
-        },
-        {
-          "name": "ControlState",
-          "type": "LIST_OF_STATE"
-        }
-      ]
+      "intent": "ControlMicrobit"
     },
     {
       "intent": "AMAZON.HelpIntent"

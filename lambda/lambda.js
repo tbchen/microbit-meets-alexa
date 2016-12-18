@@ -1,18 +1,8 @@
 'use strict';
-
-/**
- * This sample demonstrates a simple skill built with the Amazon Alexa Skills Kit.
- * The Intent Schema, Custom Slots, and Sample Utterances for this skill, as well as
- * testing instructions are located at http://amzn.to/1LzFrj6
- *
- * For additional samples, visit the Alexa Skills Kit Getting Started guide at
- * http://amzn.to/1LGWsLG
- */
-
-
 // --------------- Helpers that build all of the responses -----------------------
 var AWS = require('aws-sdk');  
 AWS.config.region = 'us-west-2';
+var http = require('http');
 function buildSpeechletResponse(title, output, repromptText, shouldEndSession) {
     return {
         outputSpeech: {
@@ -21,8 +11,8 @@ function buildSpeechletResponse(title, output, repromptText, shouldEndSession) {
         },
         card: {
             type: 'Simple',
-            title: `SessionSpeechlet - ${title}`,
-            content: `SessionSpeechlet - ${output}`,
+            title: `${title}`,
+            content: `${output}`,
         },
         reprompt: {
             outputSpeech: {
@@ -44,37 +34,6 @@ function buildResponse(sessionAttributes, speechletResponse) {
 
 
 // --------------- Functions that control the skill's behavior -----------------------
-
-function getWelcomeResponse(callback) {
-    // If we wanted to initialize the session to have some attributes we could add those here.
-    const sessionAttributes = {};
-    const cardTitle = 'Welcome';
-    const speechOutput = 'Welcome micro bit fly. What can I help you?';
-    // If the user either does not reply to the welcome message or says something that is not
-    // understood, they will be prompted again with this text.
-    const repromptText = 'What can I help you?';
-    const shouldEndSession = false;
-
-    //send msg to sns -----start
-    var sns = new AWS.SNS();
-
-    sns.publish({
-        Message: 'Test publish to SNS from Lambda',
-        TopicArn: 'arn:aws:sns:us-west-2:146859495932:testtopic'
-    }, function(err, data) {
-        if (err) {
-            console.log(err.stack);
-            return;
-        }
-        console.log('push sent');
-        console.log(data);
-    });
-    //send msg to sns -------end
-
-    callback(sessionAttributes,
-        buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
-}
-
 function handleSessionEndRequest(callback) {
     const cardTitle = 'Session Ended';
     const speechOutput = 'Thank you for trying the Alexa Skills Kit sample. Have a nice day!';
@@ -84,65 +43,46 @@ function handleSessionEndRequest(callback) {
     callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
 }
 
-function createFavoriteColorAttributes(favoriteColor) {
-    return {
-        favoriteColor,
-    };
-}
-
 /**
  * Sets the color in the session and prepares the speech to reply to the user.
  */
-function setColorInSession(intent, session, callback) {
-    const cardTitle = intent.name;
-    const favoriteColorSlot = intent.slots.Color;
-    let repromptText = '';
-    let sessionAttributes = {};
-    const shouldEndSession = false;
-    let speechOutput = '';
+function setControlInSession(intent, session, callback) {
+    //get weather from open weather api
+    var url = "http://api.openweathermap.org/data/2.5/weather?q=London&APPID=74ce281f29e619bfe6327c552eb89dce";
+    console.log('start request to ' + url)
+    http.get(url, function(res) {
+        res.on('data', function (chunk) {
+            console.log('BODY: ' + chunk);
+            var obj = JSON.parse(chunk);
+            console.log('weather:' + obj.weather[0].description)
+            console.log('weather:' + obj.weather[0].icon)
 
-    if (favoriteColorSlot) {
-        const favoriteColor = favoriteColorSlot.value;
-        sessionAttributes = createFavoriteColorAttributes(favoriteColor);
-        speechOutput = `I now know your favorite color is ${favoriteColor}. You can ask me ` +
-            "your favorite color by saying, what's my favorite color?";
-        repromptText = "You can ask me your favorite color by saying, what's my favorite color?";
-    } else {
-        speechOutput = "I'm not sure what your favorite color is. Please try again.";
-        repromptText = "I'm not sure what your favorite color is. You can tell me your " +
-            'favorite color by saying, my favorite color is red';
-    }
+            //send msg to sns -----start
+            var sns = new AWS.SNS();
 
-    callback(sessionAttributes,
-         buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
+            sns.publish({
+                Message: `${obj.weather[0].icon}`,
+                TopicArn: 'arn:aws:sns:us-west-2:146859495932:testtopic'
+            }, function(err, data) {
+                if (err) {
+                    console.log(err.stack);
+                    return;
+                }
+                console.log('push sent');
+                console.log(data);
+            });
+            //send msg to sns -------end
+            let des = obj.weather[0].description;
+            let speechOutput = `The weather is ${des}.`;
+            let repromptText = `The weather is ${des}.`;
+
+            callback({},
+                buildSpeechletResponse('micro:bit weather', speechOutput, repromptText, false));
+        });
+    }).on('error', function(e) {
+        console.log("Got error: " + e.message);
+    });
 }
-
-function getColorFromSession(intent, session, callback) {
-    let favoriteColor;
-    const repromptText = null;
-    const sessionAttributes = {};
-    let shouldEndSession = false;
-    let speechOutput = '';
-
-    if (session.attributes) {
-        favoriteColor = session.attributes.favoriteColor;
-    }
-
-    if (favoriteColor) {
-        speechOutput = `Your favorite color is ${favoriteColor}. Goodbye.`;
-        shouldEndSession = true;
-    } else {
-        speechOutput = "I'm not sure what your favorite color is, you can say, my favorite color " +
-            ' is red';
-    }
-
-    // Setting repromptText to null signifies that we do not want to reprompt the user.
-    // If the user does not respond or says something that is not understood, the session
-    // will end.
-    callback(sessionAttributes,
-         buildSpeechletResponse(intent.name, speechOutput, repromptText, shouldEndSession));
-}
-
 
 // --------------- Events -----------------------
 
@@ -160,7 +100,7 @@ function onLaunch(launchRequest, session, callback) {
     console.log(`onLaunch requestId=${launchRequest.requestId}, sessionId=${session.sessionId}`);
 
     // Dispatch to your skill's launch.
-    getWelcomeResponse(callback);
+    setControlInSession(launchRequest, session, callback);
 }
 
 /**
@@ -174,11 +114,9 @@ function onIntent(intentRequest, session, callback) {
 
     // Dispatch to your skill's intent handlers
     if (intentName === 'ControlMicrobit') {
-        setColorInSession(intent, session, callback);
-    } else if (intentName === 'WhatsMyColorIntent') {
-        getColorFromSession(intent, session, callback);
+        setControlInSession(intent, session, callback);
     } else if (intentName === 'AMAZON.HelpIntent') {
-        getWelcomeResponse(callback);
+        setControlInSession(intent, session, callback);
     } else if (intentName === 'AMAZON.StopIntent' || intentName === 'AMAZON.CancelIntent') {
         handleSessionEndRequest(callback);
     } else {
