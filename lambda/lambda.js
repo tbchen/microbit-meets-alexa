@@ -48,7 +48,7 @@ function handleSessionEndRequest(callback) {
  */
 function setControlInSession(intent, session, callback) {
     //get weather from open weather api
-    var url = "http://api.openweathermap.org/data/2.5/weather?q=London&APPID=YOU APP ID";//use your open weather map app id
+    var url = "http://api.openweathermap.org/data/2.5/weather?q=London&APPID=YOUR APP ID";//use your open weather map app id
     console.log('start request to ' + url)
     http.get(url, function(res) {
         res.on('data', function (chunk) {
