@@ -24,13 +24,13 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
         //amazon cognito
         CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
                 getApplicationContext(),
-                "us-west-2:1dd5feb1-d3d4-4adf-a892-81d539a8b6eb", // Identity Pool ID
+                "xxxx:xxxxxxx", // Identity Pool ID (change this to your identity pool id.)
                 Regions.US_WEST_2 // Region
         );
 
-        final String SNS_Platform_Application_Arn = "arn:aws:sns:us-west-2:146859495932:app/GCM/microbit_fly";
-        final String SNS_Topic_Arn = "arn:aws:sns:us-west-2:146859495932:testtopic";
-        final Regions Default_Service_Region_Type = Regions.US_WEST_2;
+        final String SNS_Platform_Application_Arn = "arn:aws:sns:xxxx:xxxxxx";//change this to your app arn
+        final String SNS_Topic_Arn = "arn:aws:sns:us-west-2:xxxx:xxxxxx";// change this to your topic arn
+        final Regions Default_Service_Region_Type = Regions.US_WEST_2;// change this to your region
 
         AmazonSNSClient snsClient = new AmazonSNSClient(credentialsProvider);
         snsClient.setRegion(Region.getRegion(Default_Service_Region_Type));
