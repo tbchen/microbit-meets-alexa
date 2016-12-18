@@ -48,7 +48,7 @@ function handleSessionEndRequest(callback) {
  */
 function setControlInSession(intent, session, callback) {
     //get weather from open weather api
-    var url = "http://api.openweathermap.org/data/2.5/weather?q=London&APPID=74ce281f29e619bfe6327c552eb89dce";
+    var url = "http://api.openweathermap.org/data/2.5/weather?q=London&APPID=YOU APP ID";//use your open weather map app id
     console.log('start request to ' + url)
     http.get(url, function(res) {
         res.on('data', function (chunk) {
@@ -62,7 +62,7 @@ function setControlInSession(intent, session, callback) {
 
             sns.publish({
                 Message: `${obj.weather[0].icon}`,
-                TopicArn: 'arn:aws:sns:us-west-2:146859495932:testtopic'
+                TopicArn: 'arn:aws:sns:xxxx:xxxxx'//user your topic arn
             }, function(err, data) {
                 if (err) {
                     console.log(err.stack);
