@@ -1,61 +1,100 @@
-let weather = 1
-if (weather == 1) {
-    led.setBrightness(255)
-    basic.showLeds(`
-        . . . . .
-        . . # . .
-        . # # # .
-        . . # . .
-        . . . . .
-        `)
-}
-if (weather == 2) {
-    led.setBrightness(113)
-    basic.showLeds(`
-        . # . # .
-        # # # # #
-        . # . # .
-        . . . . .
-        . . . . .
-        `)
-}
-if (weather == 3) {
-    led.setBrightness(170)
-    basic.showLeds(`
-        . # . # .
-        # # # # #
-        . # . # .
-        . . . . .
-        . . . . .
-        `)
-}
-
+let weather = 0
+control.onEvent(1104, 0, () => {
+    weather = control.eventValue()
+    if (weather == 1) {
+        led.setBrightness(255)
+        basic.showLeds(`
+            . . . . .
+            . . # . .
+            . # # # .
+            . . # . .
+            . . . . .
+            `)
+    }
+    if (weather == 2) {
+        led.setBrightness(113)
+        basic.showLeds(`
+            . # . # .
+            # # # # #
+            . # . # .
+            . . . . .
+            . . . . .
+            `)
+    }
+    if (weather == 3) {
+        led.setBrightness(170)
+        basic.showLeds(`
+            . # . # .
+            # # # # #
+            . # . # .
+            . . . . .
+            . . . . .
+            `)
+    }
+    if (weather == 4) {
+        led.setBrightness(255)
+        basic.showLeds(`
+            . # . # .
+            # # # # #
+            . # . # .
+            . . . . .
+            . . . . .
+            `)
+    }
+    if (weather == 5) {
+        led.setBrightness(255)
+        basic.showLeds(`
+            . # . # .
+            # # # # #
+            . # . # .
+            # . # . #
+            . # . # .
+            `)
+    }
+    if (weather == 6) {
+        led.setBrightness(198)
+        basic.showLeds(`
+            . # . # .
+            # # # # #
+            . # . # .
+            # . # . #
+            . # . # .
+            `)
+    }
+    if (weather == 7) {
+        led.setBrightness(255)
+        basic.showLeds(`
+            # . . # .
+            . # . . #
+            . . # . .
+            . # . . #
+            # . . # .
+            `)
+    }
+    if (weather == 8) {
+        led.setBrightness(198)
+        basic.showLeds(`
+            # . # . #
+            . # . # .
+            # . # . #
+            . # . # .
+            # . # . #
+            `)
+    }
+    if (weather == 9) {
+        led.setBrightness(57)
+        basic.showLeds(`
+            # # # # #
+            # # # # #
+            # # # # #
+            # # # # #
+            # # # # #
+            `)
+    }
+})
 bluetooth.onBluetoothConnected(() => {
     basic.showString("C")
 })
 bluetooth.onBluetoothDisconnected(() => {
     basic.showString("D")
-})
-control.onEvent(0, 0, () => {
-    if (control.eventValue() == 1) {
-        basic.showLeds(`
-            # # # # #
-            # # # # #
-            # # # # #
-            # # # # #
-            # # # # #
-            `)
-    } else if (control.eventValue() == 2) {
-        basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            `)
-    } else if (control.eventValue() == 3) {
-        pins.digitalWritePin(DigitalPin.P0, 1)
-    } else if (control.eventValue() == 4) {
-        pins.digitalWritePin(DigitalPin.P0, 0)
-    }
 })

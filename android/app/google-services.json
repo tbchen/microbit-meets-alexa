@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "725071489007",
+    "firebase_url": "https://microbitfly.firebaseio.com",
+    "project_id": "microbitfly",
+    "storage_bucket": "microbitfly.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725071489007:android:b4ee87dd2408ac76",
+        "android_client_info": {
+          "package_name": "link.microb.microbit_fun"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725071489007-ptphkqup4k3na48o03cucmsm47qli448.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "link.microb.microbit_fun",
+            "certificate_hash": "BE7829E6CDE45A8FBB234AC62DCB62204A562E86"
+          }
+        },
+        {
+          "client_id": "725071489007-lfsjupdrm97vo425dcdskiopg0i2vein.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxNOquzL_fSGayumQAGuZ75AoKbjPrpNU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725071489007-lfsjupdrm97vo425dcdskiopg0i2vein.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
